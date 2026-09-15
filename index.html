@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Past Tense • Interactive Learning Portal</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #131b2e;
+      --border: rgba(255, 255, 255, 0.12);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #3b82f6;
+      --accent: #8b5cf6;
+      --orange: #f97316;
+      --green: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+    .portal-container {
+      max-width: 960px;
+      width: 100%;
+      text-align: center;
+    }
+    .portal-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(59, 130, 246, 0.12);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      color: #60a5fa;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #60a5fa, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p.subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 36px auto;
+      line-height: 1.5;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      text-align: left;
+    }
+    .portal-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+    .portal-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(59, 130, 246, 0.5);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+    }
+    .card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 16px;
+    }
+    .card-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .card-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+    .card-features {
+      list-style: none;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 12.5px;
+      color: #cbd5e1;
+    }
+    .card-features li::before {
+      content: "✓ ";
+      color: var(--green);
+      font-weight: 900;
+    }
+    .btn-launch {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      color: #fff;
+      transition: all 0.2s;
+    }
+    .btn-launch:hover {
+      opacity: 0.95;
+      transform: scale(1.02);
+    }
+    .btn-student {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+    }
+    .btn-teacher {
+      background: linear-gradient(135deg, var(--orange), #ea580c);
+      box-shadow: 0 4px 14px rgba(249, 115, 22, 0.4);
+    }
+    .btn-mpi {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="portal-container">
+    <div class="portal-badge">
+      <span>✨ Senior High School Phase F • English Learning Media</span>
+    </div>
+    <h1>SIMPLE PAST TENSE PORTAL</h1>
+    <p class="subtitle">
+      Pilih mode akses di bawah ini sesuai peran Anda: Siswa (Smartphone / Tablet / Laptop) atau Guru (Presentasi Kelas &amp; Analisis Asesmen).
+    </p>
+
+    <div class="cards-grid">
+      <!-- 1. MODE SISWA -->
+      <div class="portal-card" style="border-color: rgba(59, 130, 246, 0.3);">
+        <div>
+          <div class="card-icon" style="background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3);">📱</div>
+          <h2 class="card-title">MODE SISWA</h2>
+          <p class="card-desc">
+            Antarmuka responsif ramah HP, Tablet, &amp; Laptop untuk pengerjaan Asesmen 30 Menit, Refleksi, dan melihat pembahasan nilai.
+          </p>
+          <ul class="card-features">
+            <li>Form Nama &amp; Pilihan Kelas X U 1 - X U 8</li>
+            <li>Timer 30 Menit hitung mundur otomatis</li>
+            <li>Batasan pengerjaan 1 kali (Single Attempt)</li>
+            <li>Tab Asesmen (20 Soal LOTS/MOTS/HOTS)</li>
+            <li>Tab Refleksi (3 Esai Pembelajaran)</li>
+            <li>Tab Feedback &amp; Pembahasan Soal Lengkap</li>
+          </ul>
+        </div>
+        <a href="mode_siswa/index.html" class="btn-launch btn-student">
+          <span>🚀 MASUK MODE SISWA</span>
+        </a>
+      </div>
+
+      <!-- 2. MODE GURU -->
+      <div class="portal-card" style="border-color: rgba(249, 115, 22, 0.3);">
+        <div>
+          <div class="card-icon" style="background: rgba(249, 115, 22, 0.15); border: 1px solid rgba(249, 115, 22, 0.3);">👨‍🏫</div>
+          <h2 class="card-title">MODE GURU (ANALISIS SOAL)</h2>
+          <p class="card-desc">
+            Dashboard evaluasi kelas, rekap nilai X U 1 - X U 8, monitoring esai refleksi siswa, dan Analisis Butir Soal Psikometrik.
+          </p>
+          <ul class="card-features">
+            <li>Rekap Nilai Siswa (Filter Kelas X U 1 - 8)</li>
+            <li>Analisis Butir Soal CTT (Tingkat Kesukaran P)</li>
+            <li>Daya Pembeda D (Metode 27% Upper/Lower)</li>
+            <li>Rangkuman: 🟢 Diterima | 🟡 Direvisi | 🔴 Ditolak</li>
+            <li>Analisis Efektivitas Pengecoh (Distractor A-E)</li>
+            <li>Import Data Siswa &amp; Export Nilai ke CSV/Excel</li>
+          </ul>
+        </div>
+        <a href="Simple_Past_Tense_MPI/index.html#teacher" class="btn-launch btn-teacher">
+          <span>📊 MASUK MODE GURU</span>
+        </a>
+      </div>
+
+      <!-- 3. MEDIA PEMBELAJARAN LENGKAP -->
+      <div class="portal-card" style="border-color: rgba(99, 102, 241, 0.3);">
+        <div>
+          <div class="card-icon" style="background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3);">🎮</div>
+          <h2 class="card-title">MPI MASTER (16:9)</h2>
+          <p class="card-desc">
+            Media Pembelajaran Interaktif lengkap berformat 16:9 untuk presentasi kelas proyektor, laboratorium bahasa, dan pembelajaran mandiri.
+          </p>
+          <ul class="card-features">
+            <li>8 Sub-unit Teori Interaktif Lengkap</li>
+            <li>Simulator Pembentukan Kalimat Real-time</li>
+            <li>5 Lembar Kerja Siswa (LKPD) Interaktif</li>
+            <li>Game 1: Sentence Builder HOTS (10 Soal)</li>
+            <li>Game 2: Verb Memory Match (40 Kartu)</li>
+            <li>Sertifikat Kelulusan &amp; Dark/Light Mode</li>
+          </ul>
+        </div>
+        <a href="Simple_Past_Tense_MPI/index.html" class="btn-launch btn-mpi">
+          <span>📖 BUKA MEDIA LENGKAP</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
