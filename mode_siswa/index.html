@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Student Assessment &amp; Reflection • Simple Past Tense</title>
+  <style>
+    :root {
+      --bg-body: #090d16;
+      --bg-card: #131b2e;
+      --bg-panel: #1a243b;
+      --border-color: rgba(255, 255, 255, 0.12);
+      --border-light: rgba(255, 255, 255, 0.08);
+      --text-main: #f8fafc;
+      --text-sub: #cbd5e1;
+      --text-muted: #94a3b8;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --accent: #8b5cf6;
+    }
+
+    body.light-theme {
+      --bg-body: #f1f5f9;
+      --bg-card: #ffffff;
+      --bg-panel: #f8fafc;
+      --border-color: rgba(0, 0, 0, 0.12);
+      --border-light: rgba(0, 0, 0, 0.06);
+      --text-main: #0f172a;
+      --text-sub: #334155;
+      --text-muted: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 70px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* TOP STICKY APP BAR */
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .app-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .app-brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .app-brand-text h1 {
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.3px;
+      line-height: 1.2;
+    }
+    .app-brand-text span {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* TIMER BADGE */
+    .timer-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(59, 130, 246, 0.12);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      color: #60a5fa;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 800;
+      font-family: monospace;
+      letter-spacing: 0.5px;
+    }
+    .timer-badge.warning {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: var(--warning);
+      color: var(--warning);
+      animation: pulse 1s infinite;
+    }
+    .timer-badge.danger {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: var(--danger);
+      color: var(--danger);
+      animation: pulse 0.6s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .btn-icon-theme {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+    }
+
+    /* STUDENT INFO PILL */
+    .student-badge-bar {
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border-light);
+      padding: 6px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* BOTTOM NAVIGATION BAR */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 12px;
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.15);
+    }
+    .nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+    .nav-item.active {
+      color: var(--primary);
+    }
+    .nav-item-icon {
+      font-size: 18px;
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    /* TAB CONTENT PANELS */
+    .tab-view {
+      display: none;
+    }
+    .tab-view.active {
+      display: block;
+      animation: fadeIn 0.2s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ENTRY / REGISTRATION MODAL */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(6px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-overlay.hidden {
+      display: none;
+    }
+    .register-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 24px;
+      width: 100%;
+      max-width: 460px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    .register-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .register-header h2 {
+      font-size: 20px;
+      font-weight: 900;
+      margin-top: 8px;
+    }
+    .register-header p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-sub);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .form-input {
+      width: 100%;
+      padding: 12px 14px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      color: var(--text-main);
+      font-size: 15px;
+      font-weight: 600;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+    select.form-input {
+      cursor: pointer;
+    }
+
+    .rules-card {
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 12px;
+      color: var(--text-sub);
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .rules-card strong {
+      color: var(--primary);
+    }
+
+    .btn-submit-main {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+      transition: all 0.2s ease;
+    }
+    .btn-submit-main:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+    .btn-submit-main:active {
+      transform: scale(0.98);
+    }
+
+    /* QUESTION NAVIGATOR (PILLS) */
+    .q-navigator {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 8px 2px 14px 2px;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+    }
+    .q-pill {
+      flex: 0 0 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-sub);
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+    .q-pill.answered {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .q-pill.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      transform: scale(1.08);
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+    }
+
+    /* QUESTION CARD */
+    .question-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      margin-bottom: 16px;
+    }
+    .question-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .badge-level {
+      font-size: 11px;
+      font-weight: 900;
+      padding: 3px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+    }
+    .badge-lots { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid #0284c7; }
+    .badge-mots { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid #7c3aed; }
+    .badge-hots { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid #e11d48; }
+
+    .context-box {
+      background: var(--bg-panel);
+      border-left: 4px solid var(--primary);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 13.5px;
+      color: var(--text-sub);
+      margin-bottom: 14px;
+      line-height: 1.5;
+      white-space: pre-line;
+    }
+    .prompt-text {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    /* OPTIONS */
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .option-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .option-card:hover {
+      border-color: rgba(59, 130, 246, 0.5);
+      background: rgba(59, 130, 246, 0.05);
+    }
+    .option-card.selected {
+      border-color: var(--primary);
+      background: rgba(59, 130, 246, 0.15);
+      box-shadow: 0 0 0 2px var(--primary);
+    }
+    .option-letter {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-sub);
+      font-size: 13px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .option-card.selected .option-letter {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .option-text {
+      font-size: 14.5px;
+      color: var(--text-main);
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    /* PAGINATION ROW */
+    .q-pagination {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .btn-nav-q {
+      flex: 1;
+      padding: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      font-size: 13px;
+      font-weight: 800;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    .btn-nav-q:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .btn-submit-exam {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+      border: none;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+    }
+
+    /* REFLECTION CARDS */
+    .refl-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+    .refl-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .refl-textarea {
+      width: 100%;
+      height: 110px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      color: var(--text-main);
+      font-size: 14px;
+      padding: 12px;
+      resize: vertical;
+      outline: none;
+      line-height: 1.5;
+    }
+    .refl-textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    }
+    .refl-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* FEEDBACK & SCORE SCREEN */
+    .score-hero {
+      background: linear-gradient(135deg, var(--bg-card), var(--bg-panel));
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    .score-num {
+      font-size: 52px;
+      font-weight: 900;
+      color: #22c55e;
+      line-height: 1;
+      margin: 10px 0;
+    }
+    .score-breakdown-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .breakdown-pill {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .review-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .review-item.correct {
+      border-left: 5px solid #22c55e;
+    }
+    .review-item.incorrect {
+      border-left: 5px solid #ef4444;
+    }
+    .review-explanation {
+      background: var(--bg-panel);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12.5px;
+      color: var(--text-sub);
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP APP BAR -->
+  <header class="app-header">
+    <div class="app-brand">
+      <div class="app-brand-icon">📚</div>
+      <div class="app-brand-text">
+        <h1>SIMPLE PAST TENSE</h1>
+        <span>Student Assessment • Phase F</span>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <div class="timer-badge" id="exam-timer">
+        <span>⏱️</span> <span id="timer-display">30:00</span>
+      </div>
+      <button class="btn-icon-theme" onclick="StudentApp.toggleTheme()" title="Mode Gelap/Terang">🌓</button>
+    </div>
+  </header>
+
+  <!-- STUDENT BADGE BAR -->
+  <div class="student-badge-bar" id="student-bar" style="display:none;">
+    <div>
+      <span id="display-student-name">Nama Siswa</span>
+      <span style="color:var(--text-muted); margin: 0 6px;">•</span>
+      <span id="display-student-class" style="color:var(--primary);">Kelas: -</span>
+    </div>
+    <div id="display-attempt-status" style="color:#22c55e;">Status: Aktif</div>
+  </div>
+
+  <!-- REGISTRATION / ENTRY MODAL -->
+  <div class="modal-overlay" id="register-modal">
+    <div class="register-card">
+      <div class="register-header">
+        <div style="font-size:42px;">📝</div>
+        <h2>MASUK ASESMEN SISWA</h2>
+        <p>Simple Past Tense • Senior High School Phase F</p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="reg-name">Nama Lengkap Siswa</label>
+        <input type="text" id="reg-name" class="form-input" placeholder="Masukkan nama lengkap Anda..." autocomplete="name">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="reg-class">Pilih Kelas</label>
+        <select id="reg-class" class="form-input">
+          <option value="">-- Pilih Kelas Anda --</option>
+          <option value="X U 1">Kelas X U 1</option>
+          <option value="X U 2">Kelas X U 2</option>
+          <option value="X U 3">Kelas X U 3</option>
+          <option value="X U 4">Kelas X U 4</option>
+          <option value="X U 5">Kelas X U 5</option>
+          <option value="X U 6">Kelas X U 6</option>
+          <option value="X U 7">Kelas X U 7</option>
+          <option value="X U 8">Kelas X U 8</option>
+        </select>
+      </div>
+
+      <div class="rules-card">
+        <div>⏱️ <strong>Waktu Pengerjaan:</strong> 30 Menit (Hitung mundur otomatis berjalan).</div>
+        <div>⚠️ <strong>Kesempatan:</strong> Hanya 1 kali pengerjaan (Satu kali submit, hasil terkunci).</div>
+        <div>📝 <strong>Struktur:</strong> 20 Soal Pilihan Ganda (LOTS, MOTS, HOTS) &amp; 3 Pertanyaan Refleksi.</div>
+      </div>
+
+      <button class="btn-submit-main" onclick="StudentApp.startSession()">🚀 MULAI ASESMEN SEKARANG</button>
+    </div>
+  </div>
+
+  <!-- MAIN VIEWPORT CONTAINER -->
+  <main class="container">
+
+    <!-- 1. ASSESSMENT TAB VIEW -->
+    <section class="tab-view active" id="tab-assessment">
+      <!-- Question Pills Navigator -->
+      <div class="q-navigator" id="q-pills-row">
+        <!-- Injected via JS -->
+      </div>
+
+      <!-- Current Question Box -->
+      <div class="question-box">
+        <div class="question-header">
+          <span style="font-size:14px; font-weight:900;" id="q-current-num">Question 1 of 20</span>
+          <span class="badge-level badge-lots" id="q-level-badge">LOTS</span>
+        </div>
+
+        <div class="context-box" id="q-context-box" style="display:none;">
+          <!-- Context text injected here -->
+        </div>
+
+        <div class="prompt-text" id="q-prompt-text">
+          Prompt question text goes here...
+        </div>
+
+        <div class="options-list" id="q-options-container">
+          <!-- Options A-E injected here -->
+        </div>
+
+        <div class="q-pagination">
+          <button class="btn-nav-q" id="btn-prev-q" onclick="StudentApp.prevQuestion()">◀ Sebelumnya</button>
+          <button class="btn-nav-q" id="btn-next-q" onclick="StudentApp.nextQuestion()">Selanjutnya ▶</button>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+        <span style="font-size:12.5px; font-weight:700; color:var(--text-sub);" id="q-answered-count">0 / 20 Soal Terjawab</span>
+        <button class="btn-nav-q btn-submit-exam" onclick="StudentApp.confirmSubmit()">SELESAIKAN &amp; SUBMIT ✅</button>
+      </div>
+    </section>
+
+    <!-- 2. REFLECTION TAB VIEW -->
+    <section class="tab-view" id="tab-reflection">
+      <div style="margin-bottom:16px;">
+        <h2 style="font-size:18px; font-weight:900;">💭 LEARNING REFLECTION</h2>
+        <p style="font-size:12.5px; color:var(--text-muted);">Jawab 3 pertanyaan refleksi pembelajaran berikut untuk melengkapi portofolio belajar Anda.</p>
+      </div>
+
+      <div class="refl-card">
+        <div class="refl-title">1️⃣ Key Concepts &amp; Challenges</div>
+        <p style="font-size:12.5px; color:var(--text-sub); margin-bottom:8px;">What is the most important concept you learned about Simple Past Tense today, and which rule (e.g. negative form with 'did not', irregular verbs, was/were) do you find most challenging?</p>
+        <textarea class="refl-textarea" id="refl-1" placeholder="Tuliskan refleksi Anda di sini..." oninput="StudentApp.updateWordCount(1)"></textarea>
+        <div class="refl-meta">
+          <span id="refl-count-1">0 words</span>
+          <span>Phase F English Self-Evaluation</span>
+        </div>
+      </div>
+
+      <div class="refl-card">
+        <div class="refl-title">2️⃣ Practical Application</div>
+        <p style="font-size:12.5px; color:var(--text-sub); margin-bottom:8px;">How will you use the Simple Past Tense in your daily English communication or storytelling (writing personal recount texts)?</p>
+        <textarea class="refl-textarea" id="refl-2" placeholder="Tuliskan refleksi Anda di sini..." oninput="StudentApp.updateWordCount(2)"></textarea>
+        <div class="refl-meta">
+          <span id="refl-count-2">0 words</span>
+          <span>Practical Communication Insight</span>
+        </div>
+      </div>
+
+      <div class="refl-card">
+        <div class="refl-title">3️⃣ Learning Media Experience</div>
+        <p style="font-size:12.5px; color:var(--text-sub); margin-bottom:8px;">Which activity or game helped you understand the material best, and why?</p>
+        <textarea class="refl-textarea" id="refl-3" placeholder="Tuliskan refleksi Anda di sini..." oninput="StudentApp.updateWordCount(3)"></textarea>
+        <div class="refl-meta">
+          <span id="refl-count-3">0 words</span>
+          <span>Interactive Learning Feedback</span>
+        </div>
+      </div>
+
+      <div style="text-align:right;">
+        <button class="btn-nav-q" onclick="StudentApp.saveReflectionDraft()" style="width:auto; padding:10px 20px; background:var(--bg-card); border-color:var(--accent); color:var(--accent);">💾 SIMPAN DRAF REFLEKSI</button>
+      </div>
+    </section>
+
+    <!-- 3. FEEDBACK & RESULTS TAB VIEW -->
+    <section class="tab-view" id="tab-feedback">
+      <div id="feedback-locked-banner" style="text-align:center; padding:50px 20px; color:var(--text-muted);">
+        <div style="font-size:48px;">🔒</div>
+        <h3 style="font-size:18px; font-weight:800; margin-top:12px;">Tab Feedback Masih Terkunci</h3>
+        <p style="font-size:13px; margin-top:6px;">Selesaikan pengerjaan 20 soal asesmen dan klik tombol <b>SUBMIT</b> untuk membuka hasil nilai, kunci jawaban, dan pembahasan lengkap.</p>
+      </div>
+
+      <div id="feedback-content" style="display:none;">
+        <div class="score-hero">
+          <span style="font-size:13px; font-weight:800; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">HASIL AKHIR ASESMEN</span>
+          <div class="score-num" id="fb-score-val">0/100</div>
+          <p id="fb-score-grade" style="font-size:15px; font-weight:800; color:#22c55e;">STATUS: TUNTAS (MEMENUHI KKM 75)</p>
+
+          <div class="score-breakdown-row">
+            <div class="breakdown-pill" id="fb-lots-score">LOTS: 0/6</div>
+            <div class="breakdown-pill" id="fb-mots-score">MOTS: 0/7</div>
+            <div class="breakdown-pill" id="fb-hots-score">HOTS: 0/7</div>
+          </div>
+          <div style="font-size:12px; color:var(--text-muted); margin-top:10px;" id="fb-time-used">Durasi Pengerjaan: -- menit</div>
+        </div>
+
+        <!-- Action Buttons for Student -->
+        <div style="display:flex; gap:10px; margin-bottom:18px;">
+          <button class="btn-nav-q" onclick="StudentApp.copySubmissionCode()" style="background:rgba(59,130,246,0.15); border-color:#3b82f6; color:#60a5fa;">📋 Salin Bukti Pengiriman</button>
+          <button class="btn-nav-q" onclick="StudentApp.downloadSubmissionJson()" style="background:rgba(16,185,129,0.15); border-color:#10b981; color:#34d399;">💾 Unduh File Bukti (.json)</button>
+          <button class="btn-nav-q" onclick="window.print()">🖨️ Cetak</button>
+        </div>
+
+        <h3 style="font-size:16px; font-weight:800; margin-bottom:12px;">📊 PEMBAHASAN LENGKAP 20 SOAL</h3>
+        <div id="fb-questions-review">
+          <!-- Injected via JS -->
+        </div>
+
+        <h3 style="font-size:16px; font-weight:800; margin: 20px 0 12px 0;">💭 JAWABAN REFLEKSI ANDA</h3>
+        <div id="fb-reflections-review">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM NAVIGATION BAR -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" id="bnav-assessment" onclick="StudentApp.switchTab('assessment')">
+      <span class="nav-item-icon">📊</span>
+      <span>Asesmen</span>
+    </button>
+    <button class="nav-item" id="bnav-reflection" onclick="StudentApp.switchTab('reflection')">
+      <span class="nav-item-icon">💭</span>
+      <span>Refleksi</span>
+    </button>
+    <button class="nav-item" id="bnav-feedback" onclick="StudentApp.switchTab('feedback')">
+      <span class="nav-item-icon">📋</span>
+      <span>Feedback &amp; Nilai</span>
+    </button>
+  </nav>
+
+  <script>
+    /* ==========================================================
+       STUDENT MODE APPLICATION LOGIC
+       ========================================================== */
+    const StudentApp = {
+      isLight: false,
+      currentTab: 'assessment',
+      currentQIdx: 0,
+      studentData: {
+        name: '',
+        studentClass: '',
+        startTime: null,
+        timeUsedSeconds: 0,
+        isSubmitted: false,
+        answers: {},
+        reflections: { 1: '', 2: '', 3: '' },
+        score: 0,
+        lotsScore: 0,
+        motsScore: 0,
+        hotsScore: 0
+      },
+
+      timerInterval: null,
+      timeRemaining: 1800, // 30 minutes in seconds
+
+      // 20 Questions Identical to Validated MPI
+      questions: [
+        /* 6 LOTS (1-6) */
+        {
+          id: 1, level: 'LOTS', category: 'Remembering (Verb Form)',
+          prompt: "What is the Simple Past Tense (Verb 2) form of the irregular verb 'go'?",
+          options: ["goes", "went", "gone", "going", "goed"], correct: 1,
+          explanation: "'Go' is an irregular verb whose past tense (Verb 2) is 'went'."
+        },
+        {
+          id: 2, level: 'LOTS', category: 'Remembering (Time Marker)',
+          prompt: "Which of the following is an explicit time expression for Simple Past Tense?",
+          options: ["right now", "every Monday", "yesterday", "tomorrow morning", "at the moment"], correct: 2,
+          explanation: "'Yesterday' refers to completed past time, characteristic of Simple Past Tense."
+        },
+        {
+          id: 3, level: 'LOTS', category: 'Remembering (Regular Spelling)',
+          prompt: "What is the correct past tense form (Verb 2) of the regular verb 'study'?",
+          options: ["studyed", "studyd", "studies", "studied", "studying"], correct: 3,
+          explanation: "For verbs ending in consonant + 'y', change 'y' to 'i' and add '-ed' ➔ 'studied'."
+        },
+        {
+          id: 4, level: 'LOTS', category: 'Understanding (Auxiliary Rule)',
+          prompt: "In a negative Simple Past Tense sentence with 'did not', what form must the main verb take?",
+          options: ["Verb 1 (Base Form)", "Verb 2 (Past Form)", "Verb 3 (Past Participle)", "Verb-ing (Present Participle)", "To + Infinitive"], correct: 0,
+          explanation: "Because auxiliary 'did' carries the past tense marking, the main verb reverts to Verb 1 (Base Form)."
+        },
+        {
+          id: 5, level: 'LOTS', category: 'Understanding (Subject-Verb Agreement)',
+          prompt: "Which past form of 'to be' is correctly paired with the plural subject pronoun 'They'?",
+          options: ["is", "was", "were", "are", "been"], correct: 2,
+          explanation: "Plural subjects (You, We, They) take 'were', while singular subjects (I, He, She, It) take 'was'."
+        },
+        {
+          id: 6, level: 'LOTS', category: 'Remembering (Irregular Verb)',
+          prompt: "What is the past tense (Verb 2) of the irregular verb 'buy'?",
+          options: ["buyed", "buys", "bought", "boated", "buying"], correct: 2,
+          explanation: "'Buy' is an irregular verb. Its past tense form is 'bought'."
+        },
+
+        /* 7 MOTS (7-13) */
+        {
+          id: 7, level: 'MOTS', category: 'Applying (Sentence Completion)',
+          prompt: "Complete the sentence: 'Siti ______ (visit) her grandparents in Surakarta two weeks ago.'",
+          options: ["visit", "visits", "visited", "was visiting", "has visited"], correct: 2,
+          explanation: "With past time marker 'two weeks ago', regular verb 'visit' becomes 'visited'."
+        },
+        {
+          id: 8, level: 'MOTS', category: 'Analyzing (Negative Structure)',
+          prompt: "Which of the following sentences correctly expresses a negative statement in Simple Past Tense?",
+          options: [
+            "He did not went to the library yesterday.",
+            "He did not go to the library yesterday.",
+            "He does not went to the library yesterday.",
+            "He was not go to the library yesterday.",
+            "He didn't goes to the library yesterday."
+          ], correct: 1,
+          explanation: "The correct negative formula is: Subject + did not + Verb 1 ('go') + Object/Time."
+        },
+        {
+          id: 9, level: 'MOTS', category: 'Applying (Interrogative Form)',
+          prompt: "'Did your brother ______ the new motorcycle yesterday?' Which verb form correctly completes this question?",
+          options: ["washed", "washing", "wash", "washes", "was washed"], correct: 2,
+          explanation: "In questions beginning with 'Did', the main verb must remain in its base form 'wash'."
+        },
+        {
+          id: 10, level: 'MOTS', category: 'Applying (Nominal Past)',
+          prompt: "'The examination room was silent because all students ______ very focused on the math test.' Which word correctly completes the sentence?",
+          options: ["was", "were", "are", "been", "did"], correct: 1,
+          explanation: "'All students' is a plural subject in a past nominal sentence, which requires 'were'."
+        },
+        {
+          id: 11, level: 'MOTS', category: 'Transforming (Syntactic Conversion)',
+          prompt: "Change this affirmative sentence into an interrogative sentence: 'Rian wrote an argumentative essay last night.'",
+          options: [
+            "Did Rian wrote an argumentative essay last night?",
+            "Was Rian write an argumentative essay last night?",
+            "Did Rian write an argumentative essay last night?",
+            "Does Rian write an argumentative essay last night?",
+            "Did Rian written an argumentative essay last night?"
+          ], correct: 2,
+          explanation: "The question format is 'Did + Subject (Rian) + Verb 1 (write) ...?'"
+        },
+        {
+          id: 12, level: 'MOTS', category: 'Applying (Contextual Past)',
+          prompt: "'Dewi was not hungry at lunchtime because she ______ a big sandwich two hours ago.'",
+          options: ["eats", "ate", "eaten", "was eating", "did ate"], correct: 1,
+          explanation: "The completed action two hours ago requires Verb 2 'ate'."
+        },
+        {
+          id: 13, level: 'MOTS', category: 'Analyzing (Sentence Accuracy)',
+          prompt: "Which of the following compound past sentences is grammatically sound?",
+          options: [
+            "We were at the school hall when the principal gave the speech.",
+            "We was at the school hall when the principal gave the speech.",
+            "We were at the school hall when the principal gives the speech.",
+            "We did at the school hall when the principal gave the speech.",
+            "We are at the school hall when the principal gave the speech yesterday."
+          ], correct: 0,
+          explanation: "Plural subject 'We' takes 'were' in the main clause, paired with past verb 'gave' in the time clause."
+        },
+
+        /* 7 HOTS (14-20) */
+        {
+          id: 14, level: 'HOTS', category: 'Evaluating (Dialogue Inference)',
+          context: "Mr. Danu: 'Why didn't you submit your physics project on time yesterday, Kevin?'\nKevin: 'I am really sorry, Sir. My laptop suddenly crashed, and I ______ my final document.'",
+          prompt: "Which option logically and grammatically completes Kevin's explanation?",
+          options: ["did not saved", "could not save", "do not save", "was not saving", "have not saved"], correct: 1,
+          explanation: "'Could not save' correctly expresses past inability resulting from the laptop crash with base verb 'save'."
+        },
+        {
+          id: 15, level: 'HOTS', category: 'Analyzing (Error Detection)',
+          context: "(1) They walked along Malioboro street last Saturday.\n(2) She did not felt any pain after taking the medicine.\n(3) Did you witness the debate competition this morning?\n(4) The teacher was pleased with our presentation.\n(5) Andi caught a large fish in the river two days ago.",
+          prompt: "Which of the sentences above contains a grammatical error?",
+          options: ["Sentence (1)", "Sentence (2)", "Sentence (3)", "Sentence (4)", "Sentence (5)"], correct: 1,
+          explanation: "In Sentence (2), 'did not felt' is erroneous. It must be 'did not feel' using Verb 1."
+        },
+        {
+          id: 16, level: 'HOTS', category: 'Deducing (Contextual Reasoning)',
+          context: "Amanda wanted to join the English drama club last semester, but she had mandatory basketball training every Tuesday afternoon.",
+          prompt: "What can be logically inferred about Amanda's actions in Simple Past Tense?",
+          options: [
+            "Amanda joined the drama club and quit basketball.",
+            "Amanda prioritized basketball and did not participate in drama.",
+            "Amanda does not like English drama.",
+            "Amanda will choose drama next year.",
+            "Amanda was the leader of both clubs last semester."
+          ], correct: 1,
+          explanation: "Due to the schedule conflict and mandatory training, she did not participate in drama."
+        },
+        {
+          id: 17, level: 'HOTS', category: 'Analyzing (Conjunction & Parallelism)',
+          prompt: "'Although the school debate team ______ intense preparation, they ______ first place because of brilliant rebuttals in the final round.'",
+          options: ["had - won", "have - win", "having - won", "had - did not win", "did not have - lose"], correct: 0,
+          explanation: "Both actions occurred in the past. 'Had' (had preparation) and 'won' (won first place) maintain tense harmony."
+        },
+        {
+          id: 18, level: 'HOTS', category: 'Evaluating (Aspectual Tense Nuance)',
+          context: "Sentence (A): 'Lina lived in London for three years.'\nSentence (B): 'Lina has lived in London for three years.'",
+          prompt: "Based on English tense rules, what does Sentence (A) imply that Sentence (B) does NOT?",
+          options: [
+            "Lina still lives in London today.",
+            "Lina's stay in London ended in the past; she no longer lives there.",
+            "Lina will move to London in the future.",
+            "Lina has never visited London before.",
+            "Lina only visited London on a brief vacation."
+          ], correct: 1,
+          explanation: "Simple Past Tense (lived) signifies that the action is completely finished and disconnected from the present."
+        },
+        {
+          id: 19, level: 'HOTS', category: 'Evaluating (Recount Text Coherence)',
+          context: "(1) Last semester, our school held a cultural festival.\n(2) Each class performed traditional Indonesian dances and songs.\n(3) Our class prepares a special culinary booth serving Rendang.\n(4) Visitors loved our dishes, and we won the best booth award.",
+          prompt: "Which sentence disrupts the past tense consistency of this recount paragraph and requires revision?",
+          options: ["Sentence (1)", "Sentence (2)", "Sentence (3)", "Sentence (4)", "None of the sentences"], correct: 2,
+          explanation: "Sentence (3) uses present tense 'prepares' amidst past narration. It must be revised to 'prepared'."
+        },
+        {
+          id: 20, level: 'HOTS', category: 'Synthesizing (Sentence Combination)',
+          context: "Event 1: The electricity went out at 8 PM.\nEvent 2: The students finished their homework before 8 PM.",
+          prompt: "Which option combines these two past events into one logical, grammatically sound past tense sentence?",
+          options: [
+            "The students finished their homework before the electricity went out.",
+            "The students finish their homework after the electricity went out.",
+            "The students did not finish their homework because the electricity goes out.",
+            "Before the students finished homework, the electricity went out.",
+            "The electricity went out when the students was finish their homework."
+          ], correct: 0,
+          explanation: "'The students finished their homework before the electricity went out' accurately combines both past events in logical chronological sequence."
+        }
+      ],
+
+      init() {
+        this.checkExistingSession();
+      },
+
+      toggleTheme() {
+        this.isLight = !this.isLight;
+        document.body.classList.toggle('light-theme', this.isLight);
+      },
+
+      checkExistingSession() {
+        try {
+          const raw = localStorage.getItem('MPI_STUDENT_CURRENT_SESSION');
+          if (raw) {
+            this.studentData = JSON.parse(raw);
+            if (this.studentData.isSubmitted) {
+              document.getElementById('register-modal').classList.add('hidden');
+              this.showStudentBar();
+              this.switchTab('feedback');
+              this.renderFeedback();
+              document.getElementById('timer-display').textContent = 'SELESAI';
+              return;
+            } else if (this.studentData.startTime) {
+              document.getElementById('register-modal').classList.add('hidden');
+              this.showStudentBar();
+              this.calculateRemainingTime();
+              this.startTimer();
+              this.renderPills();
+              this.loadQuestion(0);
+              this.restoreReflections();
+              return;
+            }
+          }
+        } catch(e) {}
+
+        document.getElementById('register-modal').classList.remove('hidden');
+      },
+
+      startSession() {
+        const name = document.getElementById('reg-name').value.trim();
+        const studentClass = document.getElementById('reg-class').value;
+
+        if (!name) {
+          alert('Mohon masukkan nama lengkap Anda.');
+          return;
+        }
+        if (!studentClass) {
+          alert('Mohon pilih kelas Anda (X U 1 - X U 8).');
+          return;
+        }
+
+        this.studentData = {
+          id: `sub_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+          studentName: name,
+          studentClass: studentClass,
+          startTime: Date.now(),
+          timeUsedSeconds: 0,
+          isSubmitted: false,
+          answers: {},
+          reflections: { 1: '', 2: '', 3: '' },
+          score: 0,
+          lotsScore: 0,
+          motsScore: 0,
+          hotsScore: 0
+        };
+
+        this.saveSession();
+        document.getElementById('register-modal').classList.add('hidden');
+        this.showStudentBar();
+        this.timeRemaining = 1800; // 30 mins
+        this.startTimer();
+        this.renderPills();
+        this.loadQuestion(0);
+      },
+
+      showStudentBar() {
+        document.getElementById('student-bar').style.display = 'flex';
+        document.getElementById('display-student-name').textContent = this.studentData.studentName;
+        document.getElementById('display-student-class').textContent = `Kelas: ${this.studentData.studentClass}`;
+        document.getElementById('display-attempt-status').textContent = this.studentData.isSubmitted ? 'Selesai (Terkunci)' : 'Aktif';
+        document.getElementById('display-attempt-status').style.color = this.studentData.isSubmitted ? '#38bdf8' : '#22c55e';
+      },
+
+      calculateRemainingTime() {
+        const elapsed = Math.floor((Date.now() - this.studentData.startTime) / 1000);
+        this.timeRemaining = Math.max(0, 1800 - elapsed);
+        if (this.timeRemaining <= 0) {
+          this.autoSubmitTimeOut();
+        }
+      },
+
+      startTimer() {
+        if (this.timerInterval) clearInterval(this.timerInterval);
+        this.updateTimerDisplay();
+
+        this.timerInterval = setInterval(() => {
+          this.timeRemaining--;
+          this.updateTimerDisplay();
+
+          if (this.timeRemaining <= 0) {
+            clearInterval(this.timerInterval);
+            this.autoSubmitTimeOut();
+          }
+        }, 1000);
+      },
+
+      updateTimerDisplay() {
+        const badge = document.getElementById('exam-timer');
+        const display = document.getElementById('timer-display');
+
+        const mins = Math.floor(this.timeRemaining / 60);
+        const secs = this.timeRemaining % 60;
+        display.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+        if (this.timeRemaining <= 60) {
+          badge.className = 'timer-badge danger';
+        } else if (this.timeRemaining <= 300) {
+          badge.className = 'timer-badge warning';
+        } else {
+          badge.className = 'timer-badge';
+        }
+      },
+
+      autoSubmitTimeOut() {
+        alert('WAKTU HABIS! Waktu pengerjaan 30 menit telah berakhir. Jawaban Anda akan otomatis diserahkan.');
+        this.processFinalSubmit();
+      },
+
+      saveSession() {
+        try {
+          localStorage.setItem('MPI_STUDENT_CURRENT_SESSION', JSON.stringify(this.studentData));
+        } catch(e) {}
+      },
+
+      switchTab(tabName) {
+        if (tabName === 'feedback' && !this.studentData.isSubmitted) {
+          alert('Tab Feedback & Nilai masih terkunci. Silakan selesaikan dan kumpulkan asesmen terlebih dahulu.');
+          return;
+        }
+
+        this.currentTab = tabName;
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-view').forEach(el => el.classList.remove('active'));
+
+        const activeNav = document.getElementById(`bnav-${tabName}`);
+        const activeTab = document.getElementById(`tab-${tabName}`);
+        if (activeNav) activeNav.classList.add('active');
+        if (activeTab) activeTab.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      },
+
+      renderPills() {
+        const wrap = document.getElementById('q-pills-row');
+        wrap.innerHTML = '';
+        this.questions.forEach((q, idx) => {
+          const pill = document.createElement('button');
+          pill.className = 'q-pill';
+          pill.textContent = idx + 1;
+          pill.onclick = () => this.loadQuestion(idx);
+          wrap.appendChild(pill);
+        });
+        this.updatePillStates();
+      },
+
+      updatePillStates() {
+        const pills = document.querySelectorAll('.q-pill');
+        let answeredCount = 0;
+
+        pills.forEach((p, idx) => {
+          p.className = 'q-pill';
+          if (idx === this.currentQIdx) p.classList.add('active');
+          if (this.studentData.answers[idx] !== undefined) {
+            p.classList.add('answered');
+            answeredCount++;
+          }
+        });
+
+        document.getElementById('q-answered-count').textContent = `${answeredCount} / ${this.questions.length} Soal Terjawab`;
+      },
+
+      loadQuestion(idx) {
+        this.currentQIdx = idx;
+        const q = this.questions[idx];
+
+        document.getElementById('q-current-num').textContent = `Question ${idx + 1} of ${this.questions.length}`;
+        const levelBadge = document.getElementById('q-level-badge');
+        levelBadge.textContent = q.level;
+        levelBadge.className = `badge-level badge-${q.level.toLowerCase()}`;
+
+        const ctxBox = document.getElementById('q-context-box');
+        if (q.context) {
+          ctxBox.style.display = 'block';
+          ctxBox.textContent = q.context;
+        } else {
+          ctxBox.style.display = 'none';
+        }
+
+        document.getElementById('q-prompt-text').textContent = q.prompt;
+
+        const optContainer = document.getElementById('q-options-container');
+        optContainer.innerHTML = '';
+
+        q.options.forEach((optText, optIdx) => {
+          const card = document.createElement('div');
+          card.className = 'option-card';
+          if (this.studentData.answers[idx] === optIdx) {
+            card.classList.add('selected');
+          }
+
+          card.onclick = () => {
+            if (this.studentData.isSubmitted) return;
+            this.selectAnswer(idx, optIdx);
+          };
+
+          const letter = String.fromCharCode(65 + optIdx);
+          card.innerHTML = `
+            <div class="option-letter">${letter}</div>
+            <div class="option-text">${optText}</div>
+          `;
+          optContainer.appendChild(card);
+        });
+
+        document.getElementById('btn-prev-q').disabled = (idx === 0);
+        document.getElementById('btn-next-q').disabled = (idx === this.questions.length - 1);
+        this.updatePillStates();
+      },
+
+      selectAnswer(qIdx, optIdx) {
+        this.studentData.answers[qIdx] = optIdx;
+        this.saveSession();
+        this.loadQuestion(qIdx);
+      },
+
+      prevQuestion() {
+        if (this.currentQIdx > 0) this.loadQuestion(this.currentQIdx - 1);
+      },
+
+      nextQuestion() {
+        if (this.currentQIdx < this.questions.length - 1) this.loadQuestion(this.currentQIdx + 1);
+      },
+
+      updateWordCount(reflNum) {
+        const text = document.getElementById(`refl-${reflNum}`).value.trim();
+        const words = text ? text.split(/\s+/).length : 0;
+        document.getElementById(`refl-count-${reflNum}`).textContent = `${words} words`;
+        this.studentData.reflections[reflNum] = text;
+        this.saveSession();
+      },
+
+      saveReflectionDraft() {
+        this.studentData.reflections[1] = document.getElementById('refl-1').value.trim();
+        this.studentData.reflections[2] = document.getElementById('refl-2').value.trim();
+        this.studentData.reflections[3] = document.getElementById('refl-3').value.trim();
+        this.saveSession();
+        alert('Draf refleksi berhasil disimpan.');
+      },
+
+      restoreReflections() {
+        if (this.studentData.reflections) {
+          if (this.studentData.reflections[1]) {
+            document.getElementById('refl-1').value = this.studentData.reflections[1];
+            this.updateWordCount(1);
+          }
+          if (this.studentData.reflections[2]) {
+            document.getElementById('refl-2').value = this.studentData.reflections[2];
+            this.updateWordCount(2);
+          }
+          if (this.studentData.reflections[3]) {
+            document.getElementById('refl-3').value = this.studentData.reflections[3];
+            this.updateWordCount(3);
+          }
+        }
+      },
+
+      confirmSubmit() {
+        const answered = Object.keys(this.studentData.answers).length;
+        const total = this.questions.length;
+        const r1 = document.getElementById('refl-1').value.trim();
+        const r2 = document.getElementById('refl-2').value.trim();
+        const r3 = document.getElementById('refl-3').value.trim();
+
+        let msg = `Anda telah menjawab ${answered} dari ${total} soal asesmen.`;
+        if (!r1 || !r2 || !r3) {
+          msg += `\n\nPERHATIAN: Ada pertanyaan esai refleksi yang masih kosong!`;
+        }
+        msg += `\n\nIngat: Siswa hanya dapat mengerjakan asesmen SATU KALI. Apakah Anda yakin ingin menyerahkan asesmen sekarang?`;
+
+        if (confirm(msg)) {
+          this.processFinalSubmit();
+        }
+      },
+
+      processFinalSubmit() {
+        if (this.timerInterval) clearInterval(this.timerInterval);
+
+        this.studentData.reflections[1] = document.getElementById('refl-1').value.trim();
+        this.studentData.reflections[2] = document.getElementById('refl-2').value.trim();
+        this.studentData.reflections[3] = document.getElementById('refl-3').value.trim();
+
+        const timeUsed = Math.floor((Date.now() - this.studentData.startTime) / 1000);
+        this.studentData.timeUsedSeconds = timeUsed;
+
+        let correctCount = 0;
+        let lots = 0, mots = 0, hots = 0;
+
+        this.questions.forEach((q, idx) => {
+          if (this.studentData.answers[idx] === q.correct) {
+            correctCount++;
+            if (q.level === 'LOTS') lots++;
+            else if (q.level === 'MOTS') mots++;
+            else if (q.level === 'HOTS') hots++;
+          }
+        });
+
+        this.studentData.score = Math.round((correctCount / this.questions.length) * 100);
+        this.studentData.lotsScore = lots;
+        this.studentData.motsScore = mots;
+        this.studentData.hotsScore = hots;
+        this.studentData.isSubmitted = true;
+        this.studentData.submittedAt = new Date().toISOString();
+
+        this.saveSession();
+
+        try {
+          const rawTeacher = localStorage.getItem('SIMPLE_PAST_STUDENT_SUBMISSIONS');
+          let submissions = rawTeacher ? JSON.parse(rawTeacher) : [];
+          const existIdx = submissions.findIndex(s => s.id === this.studentData.id || (s.studentName === this.studentData.studentName && s.studentClass === this.studentData.studentClass));
+          if (existIdx >= 0) {
+            submissions[existIdx] = this.studentData;
+          } else {
+            submissions.push(this.studentData);
+          }
+          localStorage.setItem('SIMPLE_PAST_STUDENT_SUBMISSIONS', JSON.stringify(submissions));
+        } catch(e) {}
+
+        this.showStudentBar();
+        this.switchTab('feedback');
+        this.renderFeedback();
+      },
+
+      renderFeedback() {
+        document.getElementById('feedback-locked-banner').style.display = 'none';
+        document.getElementById('feedback-content').style.display = 'block';
+
+        const s = this.studentData;
+        document.getElementById('fb-score-val').textContent = `${s.score}/100`;
+
+        const gradeEl = document.getElementById('fb-score-grade');
+        if (s.score >= 75) {
+          gradeEl.textContent = 'STATUS: TUNTAS (MEMENUHI KKM 75)';
+          gradeEl.style.color = '#22c55e';
+        } else {
+          gradeEl.textContent = 'STATUS: BELUM TUNTAS (PERLU REMEDIAL)';
+          gradeEl.style.color = '#ef4444';
+        }
+
+        document.getElementById('fb-lots-score').textContent = `LOTS: ${s.lotsScore}/6`;
+        document.getElementById('fb-mots-score').textContent = `MOTS: ${s.motsScore}/7`;
+        document.getElementById('fb-hots-score').textContent = `HOTS: ${s.hotsScore}/7`;
+
+        const mins = Math.floor((s.timeUsedSeconds || 0) / 60);
+        const secs = (s.timeUsedSeconds || 0) % 60;
+        document.getElementById('fb-time-used').textContent = `Durasi Pengerjaan: ${mins} menit ${secs} detik • Tanggal: ${new Date(s.submittedAt || Date.now()).toLocaleDateString()}`;
+
+        const revContainer = document.getElementById('fb-questions-review');
+        revContainer.innerHTML = '';
+
+        this.questions.forEach((q, idx) => {
+          const userAns = s.answers[idx];
+          const isCorrect = userAns === q.correct;
+          const userText = userAns !== undefined ? `${String.fromCharCode(65 + userAns)}. ${q.options[userAns]}` : 'Tidak dijawab';
+          const correctText = `${String.fromCharCode(65 + q.correct)}. ${q.options[q.correct]}`;
+
+          const div = document.createElement('div');
+          div.className = `review-item ${isCorrect ? 'correct' : 'incorrect'}`;
+          div.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <strong style="font-size:13.5px;">Soal ${idx + 1} (${q.level})</strong>
+              <span style="font-weight:800; font-size:12px; color:${isCorrect ? '#22c55e' : '#ef4444'};">
+                ${isCorrect ? '✅ BENAR (+5 Poin)' : '❌ SALAH (0 Poin)'}
+              </span>
+            </div>
+            <p style="font-size:14px; margin-bottom:6px;">${q.prompt}</p>
+            <div style="font-size:12.5px; color:var(--text-sub);">
+              <div>Jawaban Anda: <b style="color:${isCorrect ? '#22c55e' : '#ef4444'};">${userText}</b></div>
+              ${!isCorrect ? `<div>Kunci Jawaban: <b style="color:#22c55e;">${correctText}</b></div>` : ''}
+            </div>
+            <div class="review-explanation">
+              💡 <b>Pembahasan:</b> ${q.explanation}
+            </div>
+          `;
+          revContainer.appendChild(div);
+        });
+
+        const reflContainer = document.getElementById('fb-reflections-review');
+        reflContainer.innerHTML = `
+          <div class="refl-card">
+            <strong>1. Key Concepts &amp; Challenges:</strong>
+            <p style="margin-top:4px; font-style:italic; color:var(--text-sub);">"${s.reflections[1] || 'Tidak diisi.'}"</p>
+          </div>
+          <div class="refl-card">
+            <strong>2. Practical Application:</strong>
+            <p style="margin-top:4px; font-style:italic; color:var(--text-sub);">"${s.reflections[2] || 'Tidak diisi.'}"</p>
+          </div>
+          <div class="refl-card">
+            <strong>3. Learning Media Experience:</strong>
+            <p style="margin-top:4px; font-style:italic; color:var(--text-sub);">"${s.reflections[3] || 'Tidak diisi.'}"</p>
+          </div>
+        `;
+      },
+
+      copySubmissionCode() {
+        const jsonStr = JSON.stringify(this.studentData);
+        navigator.clipboard.writeText(jsonStr).then(() => {
+          alert('Kode bukti pengerjaan berhasil disalin ke clipboard! Silakan kirimkan ke guru Anda.');
+        }).catch(() => {
+          prompt('Salin teks submission ini untuk dikirim ke guru:', jsonStr);
+        });
+      },
+
+      downloadSubmissionJson() {
+        const jsonStr = JSON.stringify(this.studentData, null, 2);
+        const blob = new Blob([jsonStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Asesmen_${this.studentData.studentClass}_${this.studentData.studentName.replace(/\s+/g, '_')}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+    };
+
+    window.addEventListener('DOMContentLoaded', () => {
+      StudentApp.init();
+    });
+  </script>
+</body>
+</html>
